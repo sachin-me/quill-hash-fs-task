@@ -38,7 +38,24 @@ const actions = {
 				cb(true)
 			} else cb(false)
 		})
-  }
+	},
+	
+	verifyUser: (cb) => dispatch => {
+		fetch('/users/verify', {
+			headers: {
+				'Content-Type': 'application/json',
+				"authorization": localStorage.token
+			}
+		})
+		.then(res => res.json())
+		.then(user => {
+			if (user.msg) {
+				cb(true, user.msg)
+			} else {
+				cb(false, user.err)
+			}
+		})
+	}
 }
 
 export default actions;

@@ -42,7 +42,6 @@ if (process.env.NODE_ENV === "development") {
 }
 
 app.use("/users", require("./server/routes/users"));
-app.use("/todo", require("./server/routes/todo"));
 app.use(require("./server/routes/index"));
 
 // Creating http server
