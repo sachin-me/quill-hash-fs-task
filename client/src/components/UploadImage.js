@@ -1,32 +1,43 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import imgActions from '../actions/image.action';
+import keys from '../key';
 
 class UploadImage extends Component {
 
 	state = {
-		image: null
+		image: null,
+		message: ''
 	}
 
 	handleFile = (event) => {
 		const photo = event.target.files[0];
-    this.setState({
-			image: photo
-		})
-    console.log(photo, 'photo')
-		// file conversion to base64 using FileReader fn
-    // const reader = new FileReader();
-    // reader.onload = (event) => {
-    //   sendImg(event.target.result);
-    // };
-		// reader.readAsDataURL(photo);
+    const sendImg = (str) => {
+      str ? this.setState({ image: str }) : null;
+    }
+
+    // file conversion to base64 using FileReader fn
+    const reader = new FileReader();
+    reader.onload = (event) => {
+      sendImg(event.target.result);
+    };
+    reader.readAsDataURL(photo);
 	};
 
 	handleSubmit = (e) => {
 		e.preventDefault();
 		const { image } = this.state;
-		// const data = { image }
-		this.props.dispatch(imgActions.uploadImage(image))
+		const cloudData = { file: image, upload_preset: keys.UPLOAD_PRESET }
+		
+		this.props.dispatch(imgActions.cloudinaryImgUpload(cloudData, ((success, img) => {
+			if (success) {
+				this.props.dispatch(imgActions.uploadImage(img.secure_url))
+			} else {
+				this.setState({
+					message: img.error
+				})
+			}
+		})))
 	}
 
 	render() {
@@ -36,6 +47,7 @@ class UploadImage extends Component {
 					<input type="file" name="image" id="" onChange={this.handleFile} />
 					<input type="submit" value="Submit" />
 				</form>
+				<div className="message">{this.state.message}</div>
 			</div>
 		);
 	}

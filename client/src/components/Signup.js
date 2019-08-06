@@ -8,7 +8,8 @@ class Signup extends Component {
   state = {
     username: '',
     email: '',
-    password: ''
+		password: '',
+		message: ''
   }
 
   handleChange = ({target: { name, value }}) => {
@@ -18,10 +19,21 @@ class Signup extends Component {
   }
 
   handleSubmit = (e) => {
-    e.preventDefault();
-    this.props.dispatch(actions.createUser(this.state, (success) => {
+		e.preventDefault();
+		const { username, email, password } = this.state;
+		const data = { username, email, password };
+		if (!username && !email && !password) {
+			return this.setState({
+				message: 'Input your credentials :)'
+			})
+		}
+    this.props.dispatch(actions.createUser(data, (success) => {
 			if (success) {
 				this.props.history.push('/login');
+			} else {
+				this.setState({
+					message: 'Internal server error'
+				})
 			}
 		}))
   }
@@ -39,6 +51,7 @@ class Signup extends Component {
 					<div className='signup-info'>
 						Already an account? <Link to='/login'>Login</Link>
 					</div>
+					<div className="message">{this.state.message}</div>
 				</form>
 			</div>
     )

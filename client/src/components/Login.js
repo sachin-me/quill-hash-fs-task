@@ -7,7 +7,8 @@ class Login extends Component {
 
   state = {
     email: '',
-    password: ''
+		password: '',
+		message: ''
   }
 
   handleChange = ({target: { name, value }}) => {
@@ -17,10 +18,21 @@ class Login extends Component {
   }
 
   handleSubmit = (e) => {
-    e.preventDefault();
-    this.props.dispatch(actions.loginUser(this.state, (success) => {
+		e.preventDefault();
+		const { email, password } = this.state;
+		const data = { email, password };
+		if (!email && !password) {
+			return this.setState({
+				message: 'Input your credentials :)'
+			})
+		}
+    this.props.dispatch(actions.loginUser(data, (success) => {
 			if (success) {
 				this.props.history.push('/');
+			} else {
+				this.setState({
+					message: 'User not found'
+				})
 			}
 		}))
   }
@@ -37,6 +49,7 @@ class Login extends Component {
 					<div className='signup-info'>
 						Need an account? <Link to='/register'>Signup</Link>
 					</div>
+					<div className="message">{this.state.message}</div>
 				</form>
 			</div>
     )

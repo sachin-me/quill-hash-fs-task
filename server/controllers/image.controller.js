@@ -1,7 +1,7 @@
-
+const User = require('./../models/User');
 
 module.exports = {
 	uploadImage: (req, res) => {
-		console.log(req.file, 'in image ctrl')
+		console.log(req.body, 'in image ctrl')
 	}
 }

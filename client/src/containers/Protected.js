@@ -7,8 +7,11 @@ const Protected = () => {
 	return (
 		<div>
 			<Router>
-				<Header />
-				<Route exact path="/" component={Dashboard} />
+				<div className='route-wrapper'>
+					<Header />
+				</div>
+				{/* <Route exact path="/" component={Dashboard} /> */}
+				<Dashboard />
 			</Router>
 		</div>
 	)

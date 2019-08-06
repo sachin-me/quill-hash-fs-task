@@ -31,7 +31,6 @@ class App extends Component {
 	render() {
 		const { isAuthenticated } = this.props;
 		const { message, error } = this.state;
-
 		return (
 			<div>
 				{

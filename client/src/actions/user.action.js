@@ -26,14 +26,13 @@ const actions = {
     })
     .then(res => res.json())
     .then(user => {
-			console.log(user, 'user');
 			if (user.msg) {
-				let token = localStorage.setItem('token', user.token);
-				let currentUser = localStorage.setItem('user', JSON.stringify(user));
+				localStorage.setItem('token', user.token);
+				localStorage.setItem('user', JSON.stringify(user));
+
 				dispatch({
 					type: 'USER_LOGIN_SUCCESS',
-					token,
-					currentUser
+					user
 				})
 				cb(true)
 			} else cb(false)

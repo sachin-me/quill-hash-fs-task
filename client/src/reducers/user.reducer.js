@@ -1,7 +1,7 @@
 const initState = {
 	currentUser: JSON.parse(localStorage.getItem('user')) || null,
   currentToken: localStorage.getItem('token') || null,
-	isAuthenticated: (localStorage.getItem('token')) ? true : false
+	isAuthenticated: localStorage.getItem('token') ? true : false
 }
 
 function userReducer(state = initState, action) {
@@ -10,7 +10,9 @@ function userReducer(state = initState, action) {
 		case 'USER_LOGIN_SUCCESS': {
 			return {
 				...state,
-				currentUser: action.currentUser
+				currentUser: action.user,
+				currentToken: action.user.token,
+				isAuthenticated: action.user.token ? true : false
 			}
 		}
 		
