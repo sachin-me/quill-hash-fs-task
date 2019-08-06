@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 import actions from '../actions/user.action';
 
 class Login extends Component {
@@ -26,11 +27,18 @@ class Login extends Component {
 
   render() {
     return (
-      <form onSubmit={this.handleSubmit}>
-        <input type="email" name="email" placeholder="email" onChange={this.handleChange} />
-        <input type="password" name="password" placeholder="password" onChange={this.handleChange} />
-        <input type="submit" value="Login" />
-      </form>
+			<div className="signup-wrapper">
+				<form onSubmit={this.handleSubmit}>
+					<input type="email" name="email" placeholder="email" onChange={this.handleChange} />
+					<input type="password" name="password" placeholder="password" onChange={this.handleChange} />
+					<div className='signup-btn-wrapper'>
+						<input type="submit" value="Login" />
+					</div>
+					<div className='signup-info'>
+						Need an account? <Link to='/register'>Signup</Link>
+					</div>
+				</form>
+			</div>
     )
   }
 }

@@ -1,5 +1,77 @@
 body {
-  background: #888;
-	color: aliceblue;
+	margin: 0;
 	font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif
+}
+
+// Route //
+.route-wrapper {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	background: #EE6E62;
+	height: 3rem;
+	padding: 0 1rem;
+	a {
+		text-decoration: none;
+		color: aliceblue;
+		cursor: pointer;
+	}
+}
+
+// Main //
+.main-wrapper {
+	a {
+		margin: 0 1rem;
+		text-decoration: none;
+		color: aliceblue;
+		cursor: pointer;
+	}
+}
+
+// Sign up //
+.signup-wrapper {
+	max-width: 600px;
+	width: 100%;
+	margin: 3rem auto;
+	form {
+		display: grid;
+    grid-gap: 20px;
+		input {
+			border: 1px solid #888;
+			border-radius: 0.15rem;
+			height: 2rem;
+			padding: 0.25rem;
+			outline: none;
+			font-size: 1rem;
+		}
+		input[type="text"], input[type="email"], input[type="password"] {
+			&:active, &:focus {
+				border: 1px solid #EE6E62;
+			}
+		}
+		.signup-btn-wrapper {
+			text-align: center;
+			input[type="submit"] {
+				height: 2.5rem;
+				width: 4.5rem;
+				cursor: pointer;
+				background: #EE6E62;
+				color: aliceblue;
+				border: 1px solid #EE6E62;
+				&:hover {
+					background: #fff;
+					border: 1px solid #888;
+					color: #EE6E62;
+				}
+			}
+		}
+		.signup-info {
+			text-align: center;
+			color: #888;
+			a {
+				font-size: 1.3rem;
+				color: #888;
+			}
+		}
+	}
 }

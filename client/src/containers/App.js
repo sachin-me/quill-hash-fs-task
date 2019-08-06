@@ -12,17 +12,20 @@ class App extends Component {
 	}
 
 	componentDidMount() {
-		this.props.dispatch(actions.verifyUser((success, message) => {
-			if (success) {
-				this.setState({
-					message: message
-				})
-			} else {
-				this.setState({
-					error: message
-				})
-			}
-		}));
+		const { isAuthenticated } = this.props;
+		if (isAuthenticated) {
+			this.props.dispatch(actions.verifyUser((success, message) => {
+				if (success) {
+					this.setState({
+						message: message
+					})
+				} else {
+					this.setState({
+						error: message
+					})
+				}
+			}));
+		}
 	}
 	
 	render() {

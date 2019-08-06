@@ -18,8 +18,8 @@ mongoose.connection.on('error', e => {
 	console.log('Error: ' + e);
 })
 
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json({limit: '50mb'}));
+app.use(bodyParser.urlencoded({limit: '50mb', extended: true}));
 
 app.use(express.static(path.join(__dirname, "public")));
 
@@ -42,6 +42,7 @@ if (process.env.NODE_ENV === "development") {
 }
 
 app.use("/users", require("./server/routes/users"));
+app.use("/image", require("./server/routes/image"));
 app.use(require("./server/routes/index"));
 
 // Creating http server
