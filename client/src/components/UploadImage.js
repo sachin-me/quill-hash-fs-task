@@ -46,10 +46,12 @@ class UploadImage extends Component {
 
 	render() {
 		return (
-			<div>
+			<div className="signup-wrapper">
 				<form action="" method="post" encType='multipart/form-data' onSubmit={this.handleSubmit}>
 					<input type="file" name="image" id="" onChange={this.handleFile} />
-					<input type="submit" value="Submit" />
+					<div className='signup-btn-wrapper'>
+						<input type="submit" value="Submit" />
+					</div>
 				</form>
 				<div className="message">{this.state.message}</div>
 			</div>
