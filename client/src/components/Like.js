@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import imgActions from '../actions/image.action';
 
 class Like extends Component {
 
 	handleClick = () => {
-		this.props.dispatch();
+		this.props.dispatch(imgActions.likeImage());
 	}
 
 	render() {
@@ -15,4 +17,4 @@ class Like extends Component {
 	}
 }
 
-export default Like;
+export default connect(null)(Like);

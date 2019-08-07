@@ -50,14 +50,14 @@ module.exports = {
 					err: 'Bad request'
 				})
 			}
-
 			// Checking if user already liked this user or not
-			if (user.likes.indexOf(id) > -1) {
+
+			if (user.likes.includes(id)) {
 				User.findOneAndUpdate({ _id: id }, {
 					$pull: {
-						likes: id
+						'likes': user._id
 					}
-				}, (err, updatedUser) => {
+				}, {new: true}, (err, updatedUser) => {
 					if (err) {
 						return res.status(500).json({
 							err: 'Internal server error'
@@ -72,9 +72,9 @@ module.exports = {
 			} else {
 				User.findOneAndUpdate({ _id: id }, {
 					$push: {
-						likes: id
+						'likes': user._id
 					}
-				}, (err, likedUser) => {
+				}, {new: true}, (err, likedUser) => {
 					if (err) {
 						return res.status(500).json({
 							err: 'Internal server error'
@@ -102,12 +102,12 @@ module.exports = {
 			}
 
 			// Checking if user already superliked this user or not
-			if (user.likes.indexOf(id) > -1) {
+			if (user.likes.includes(id)) {
 				User.findOneAndUpdate({ _id: id }, {
 					$pull: {
-						superlikes: id
+						superlikes: user._id
 					}
-				}, (err, updatedUser) => {
+				}, {new: true}, (err, updatedUser) => {
 					if (err) {
 						return res.status(500).json({
 							err: 'Internal server error'
@@ -122,9 +122,9 @@ module.exports = {
 			} else {
 				User.findOneAndUpdate({ _id: id }, {
 					$push: {
-						superlikes: id
+						superlikes: user._id
 					}
-				}, (err, superLikedUser) => {
+				}, {new: true}, (err, superLikedUser) => {
 					if (err) {
 						return res.status(500).json({
 							err: 'Internal server error'
