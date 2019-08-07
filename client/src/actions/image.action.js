@@ -58,6 +58,18 @@ const imgActions = {
 				})
 			}
 		})
+	},
+
+	// Like an image
+	likeImage: () => dispatch => {
+		fetch('/image/like', {
+			headers: {
+				'Content-Type': 'application/json',
+				authorization: localStorage.token
+			}
+		})
+		.then(res => res.json())
+		.then(data => console.log(data, 'data in like image'))
 	}
 }
 
