@@ -31,7 +31,11 @@ class UploadImage extends Component {
 		
 		this.props.dispatch(imgActions.cloudinaryImgUpload(cloudData, ((success, img) => {
 			if (success) {
-				this.props.dispatch(imgActions.uploadImage(img.secure_url))
+				this.props.dispatch(imgActions.uploadImage(img.secure_url, (done) => {
+					if (done) {
+						this.props.history.push('/');
+					}
+				}))
 			} else {
 				this.setState({
 					message: img.error

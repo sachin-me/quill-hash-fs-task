@@ -12,7 +12,6 @@ const Public = () => {
 			<Router>
 				<div className='route-wrapper'>
 					<Header />
-					<Route exact path="/" component={Main} />
 				</div>
 	      <Route exact path="/register" component={Signup} />
 	      <Route exact path="/login" component={Login} />
