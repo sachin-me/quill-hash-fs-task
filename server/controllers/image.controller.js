@@ -138,5 +138,55 @@ module.exports = {
 				})
 			}
 		})
+	},
+
+	// Block an image/user
+	blockImage: (req, res) => {
+		const { id } = res.locals.userId;
+
+		User.findOne({ _id: id }, (err, user) => {
+			if (err) {
+				return res.status(401).json({
+					err: 'Bad request'
+				})
+			}
+
+			// Checking if user already superliked this user or not
+			if (user.blocks.includes(id)) {
+				User.findOneAndUpdate({ _id: id }, {
+					$pull: {
+						'blocks': user._id
+					}
+				}, {new: true}, (err, updatedUser) => {
+					if (err) {
+						return res.status(500).json({
+							err: 'Internal server error'
+						})
+					} else {
+						return res.status(200).json({
+							msg: 'user already super liked',
+							updatedUser
+						})
+					}
+				})
+			} else {
+				User.findOneAndUpdate({ _id: id }, {
+					$push: {
+						'blocks': user._id
+					}
+				}, {new: true}, (err, blockedUser) => {
+					if (err) {
+						return res.status(500).json({
+							err: 'Internal server error'
+						})
+					} else {
+						return res.status(200).json({
+							msg: 'user super liked, success',
+							blockedUser
+						})
+					}
+				})
+			}
+		})
 	}
 }
