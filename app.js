@@ -4,6 +4,8 @@ const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 const path = require("path");
 const http = require('http');
+const soketIo = require('socket.io');
+
 require('dotenv').config()
 
 const port = 8000;
@@ -48,6 +50,22 @@ app.use(require("./server/routes/index"));
 // Creating http server
 const server = http.createServer(app);
 
+const io = soketIo(server);
+
+io.on('connection', (socket) => {
+	console.log('User connected');
+
+	socket.on('likes', (notification) => {	
+		console.log(notification, 'checking notification');
+		// On connection start pushing likes to database
+	})
+	socket.on('disconnect', () => {
+		console.log('User disconnected');
+	})
+})
+
 server.listen(port, () => {
  console.log(`server is running on http://localhost:${port}`);
 });
+
+require('./server/controllers/image.controller').test(io)
