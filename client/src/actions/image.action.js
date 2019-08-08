@@ -71,7 +71,7 @@ const imgActions = {
 		.then(res => res.json())
 		.then(data => console.log(data, 'data in like image'))
 	},
-	
+
 	// superlike an image
 	superLikeImage: () => dispatch => {
 		fetch('/image/superlike', {
@@ -82,6 +82,18 @@ const imgActions = {
 		})
 		.then(res => res.json())
 		.then(data => console.log(data, 'data in super like image'))
+	},
+
+	// Block an image/user
+	blockImage: () => dispatch => {
+		fetch('/image/block', {
+			headers: {
+				'Content-Type': 'application/json',
+				authorization: localStorage.token
+			}
+		})
+		.then(res => res.json())
+		.then(blocked => console.log(blocked, 'blocked user in imgActions'))
 	}
 }
 

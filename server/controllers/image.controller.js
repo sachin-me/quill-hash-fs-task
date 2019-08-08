@@ -164,7 +164,7 @@ module.exports = {
 						})
 					} else {
 						return res.status(200).json({
-							msg: 'user already super liked',
+							msg: 'user already blocked',
 							updatedUser
 						})
 					}
@@ -181,7 +181,7 @@ module.exports = {
 						})
 					} else {
 						return res.status(200).json({
-							msg: 'user super liked, success',
+							msg: 'user blocked, success',
 							blockedUser
 						})
 					}

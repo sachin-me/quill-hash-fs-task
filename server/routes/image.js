@@ -16,4 +16,7 @@ router.get('/like', isUser, imageController.likeImage)
 // calling superlike user controller at this route
 router.get('/superlike', isUser, imageController.superlikeImage);
 
+// calling block image/user controller at this route
+router.get('/block', isUser, imageController.blockImage);
+
 module.exports = router
