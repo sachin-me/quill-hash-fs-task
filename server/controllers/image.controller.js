@@ -102,10 +102,10 @@ module.exports = {
 			}
 
 			// Checking if user already superliked this user or not
-			if (user.likes.includes(id)) {
+			if (user.superlikes.includes(id)) {
 				User.findOneAndUpdate({ _id: id }, {
 					$pull: {
-						superlikes: user._id
+						'superlikes': user._id
 					}
 				}, {new: true}, (err, updatedUser) => {
 					if (err) {
@@ -122,7 +122,7 @@ module.exports = {
 			} else {
 				User.findOneAndUpdate({ _id: id }, {
 					$push: {
-						superlikes: user._id
+						'superlikes': user._id
 					}
 				}, {new: true}, (err, superLikedUser) => {
 					if (err) {

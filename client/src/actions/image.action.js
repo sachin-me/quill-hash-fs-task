@@ -70,6 +70,18 @@ const imgActions = {
 		})
 		.then(res => res.json())
 		.then(data => console.log(data, 'data in like image'))
+	},
+	
+	// superlike an image
+	superLikeImage: () => dispatch => {
+		fetch('/image/superlike', {
+			headers: {
+				'Content-Type': 'application/json',
+				authorization: localStorage.token
+			}
+		})
+		.then(res => res.json())
+		.then(data => console.log(data, 'data in super like image'))
 	}
 }
 
