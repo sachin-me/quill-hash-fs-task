@@ -10,7 +10,8 @@ const UserSchema = new Schema({
 	image: { type: String },
 	likes: [{ type: Schema.Types.ObjectId, ref: 'User'  }],
 	superlikes: [{ type: Schema.Types.ObjectId, ref: 'User' }],
-	blocks: [{ type: Schema.Types.ObjectId, ref: 'User' }]
+	blocks: [{ type: Schema.Types.ObjectId, ref: 'User' }],
+	notifications: [{ type: Schema.Types.ObjectId, ref: 'Notification' }]
 })
 
 UserSchema.pre('save', function(next) {

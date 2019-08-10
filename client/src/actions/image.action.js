@@ -61,15 +61,24 @@ const imgActions = {
 	},
 
 	// Like an image
-	likeImage: () => dispatch => {
+	likeImage: (value, cb) => dispatch => {
+		console.log(value);
 		fetch('/image/like', {
+			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json',
 				authorization: localStorage.token
-			}
+			},
+			body: JSON.stringify({ value })
 		})
 		.then(res => res.json())
-		.then(data => console.log(data, 'data in like image'))
+		.then(data => {
+			if (data.msg) {
+				cb(true)
+			} else {
+				cb(false)
+			}
+		})
 	},
 
 	// superlike an image
@@ -94,6 +103,18 @@ const imgActions = {
 		})
 		.then(res => res.json())
 		.then(blocked => console.log(blocked, 'blocked user in imgActions'))
+	},
+
+	// Get like notification
+	getLikeNotification: () => dispatch => {
+		fetch('/image/likenotification', {
+			headers: {
+				'Content-Type': 'application/json',
+				authorization: localStorage.token
+			}
+		})
+		.then(res => res.json())
+		.then(notification => console.log(notification, 'notification'))
 	}
 }
 

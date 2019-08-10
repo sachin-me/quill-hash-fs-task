@@ -12,12 +12,15 @@ router.post('/upload', multerUploads, isUser, imgCtrl.uploadImage)
 router.get('/getimage', isUser, imgCtrl.getImage);
 
 // calling like user controller at this route
-router.get('/like', isUser, imgCtrl.likeImage)
+router.post('/like', isUser, imgCtrl.likeImage)
 
 // calling superlike user controller at this route
 router.get('/superlike', isUser, imgCtrl.superlikeImage);
 
 // calling block image/user controller at this route
 router.get('/block', isUser, imgCtrl.blockImage);
+
+// calling like notifications at this route
+router.get('/likenotification', isUser, imgCtrl.getLikeNotifications);
 
 module.exports = router

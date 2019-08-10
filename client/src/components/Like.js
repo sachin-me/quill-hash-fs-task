@@ -4,8 +4,16 @@ import imgActions from '../actions/image.action';
 
 class Like extends Component {
 
+	state = {
+		like: 'LIKE'
+	}
+
 	handleClick = () => {
-		this.props.dispatch(imgActions.likeImage());
+		this.props.dispatch(imgActions.likeImage(this.state.like, (success) => {
+			if (success) {
+				this.props.dispatch(imgActions.getLikeNotification());
+			}
+		}));
 	}
 
 	render() {

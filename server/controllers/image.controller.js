@@ -1,6 +1,9 @@
 const User = require('./../models/User');
+const Notification = require('./../models/Notification');
 
+var a = ''
 module.exports.test = function (io) {
+	a = io
 	return {
 		// uploading image to db
 		uploadImage: (req, res) => {
@@ -41,8 +44,9 @@ module.exports.test = function (io) {
 		},
 
 		// Like an image
-		likeImage: (req, res) => {
+		likeImage: (req, res, next) => {
 			const { id } = res.locals.userId;
+			const { value } = req.body;
 
 			User.findOne({ _id: id }, (err, user) => {
 				if (err) {
@@ -80,9 +84,33 @@ module.exports.test = function (io) {
 								err: 'Internal server error'
 							})
 						} else {
-							return res.status(200).json({
-								msg: 'user liked, success',
-								likedUser
+							const newNotification = new Notification({
+								liker: user._id,
+								likee: likedUser._id,
+								status: value
+							})
+							newNotification.save((err, notification) => {
+								if (err) {
+									return res.status(500).json({
+										err: 'Failed to create notification'
+									})
+								} else {
+									User.findOneAndUpdate({ _id: id}, {
+										$push: {
+											notifications: notification._id
+										}
+									}, {new: true}, (err, likeduser) => {
+										if (err) {
+											return res.status(500).json({
+												err: 'Internal server error'
+											})
+										}
+										return res.status(200).json({
+											msg: 'update user, success',
+											likeduser
+										})
+									})
+								}
 							})
 						}
 					})
@@ -185,6 +213,37 @@ module.exports.test = function (io) {
 								blockedUser
 							})
 						}
+					})
+				}
+			})
+		},
+
+		// get notifications for like 
+		getLikeNotifications: (req, res) => {
+			const { id } = res.locals.userId;
+
+			User.findOne({_id: id}).populate('notifications').exec((err, notifications) => {
+				if (err) {
+					return res.status(500).json({
+						err: 'Internal server error'
+					})
+				} else {
+					notifications.notifications.map((notification) => {
+						Notification.findOne({ _id: notification._id }).populate('liker').exec((err, singleNtfs) => {
+							if (err) {
+								return res.status(500).json({
+									err: 'Internal server error'
+								})
+							} else {
+								const { email, username } = singleNtfs.liker[0];
+								const info = { email, username };
+								a.emit('likes', info);
+								return res.status(200).json({
+									msg: 'get notification, success',
+									info
+								})
+							}
+						})
 					})
 				}
 			})
