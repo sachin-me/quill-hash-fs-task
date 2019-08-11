@@ -54,11 +54,7 @@ const io = soketIo(server);
 
 io.on('connection', (socket) => {
 	console.log('User connected');
-
-	socket.on('likes', (notification) => {	
-		console.log(notification, 'checking notification');
-		// On connection start pushing likes to database
-	})
+	
 	socket.on('disconnect', () => {
 		console.log('User disconnected');
 	})

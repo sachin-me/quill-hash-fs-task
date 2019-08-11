@@ -221,30 +221,31 @@ module.exports.test = function (io) {
 		// get notifications for like 
 		getLikeNotifications: (req, res) => {
 			const { id } = res.locals.userId;
-
 			User.findOne({_id: id}).populate('notifications').exec((err, notifications) => {
 				if (err) {
 					return res.status(500).json({
 						err: 'Internal server error'
 					})
 				} else {
-					notifications.notifications.map((notification) => {
-						Notification.findOne({ _id: notification._id }).populate('liker').exec((err, singleNtfs) => {
+						Notification.findOne({ _id: notifications.notifications[0]._id }).populate('liker').exec((err, singleNtfs) => {
 							if (err) {
 								return res.status(500).json({
 									err: 'Internal server error'
 								})
 							} else {
-								const { email, username } = singleNtfs.liker[0];
-								const info = { email, username };
-								a.emit('likes', info);
-								return res.status(200).json({
-									msg: 'get notification, success',
-									info
-								})
+								if (singleNtfs.liker[0]) {
+									const { email, username } = singleNtfs.liker[0];
+									const info = { email, username };
+									a.emit('likes', info);
+									return res.status(200).json({
+										msg: 'get notification, success',
+										info
+									})
+								}
+
 							}
 						})
-					})
+					// })
 				}
 			})
 		}

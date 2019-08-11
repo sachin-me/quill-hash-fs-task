@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import io from 'socket.io-client';
 import imgActions from '../actions/image.action';
+
+const socket = io();
 
 class Like extends Component {
 
@@ -11,7 +14,7 @@ class Like extends Component {
 	handleClick = () => {
 		this.props.dispatch(imgActions.likeImage(this.state.like, (success) => {
 			if (success) {
-				this.props.dispatch(imgActions.getLikeNotification());
+				this.props.dispatch(imgActions.getLikeNotification(socket));
 			}
 		}));
 	}

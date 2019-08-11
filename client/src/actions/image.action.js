@@ -106,7 +106,7 @@ const imgActions = {
 	},
 
 	// Get like notification
-	getLikeNotification: () => dispatch => {
+	getLikeNotification: (socket) => dispatch => {
 		fetch('/image/likenotification', {
 			headers: {
 				'Content-Type': 'application/json',
@@ -114,7 +114,12 @@ const imgActions = {
 			}
 		})
 		.then(res => res.json())
-		.then(notification => console.log(notification, 'notification'))
+		.then(notification => {
+			console.log(socket, 'socket');
+			socket.on('likes', (ntfs) => {
+				console.log(ntfs, 'in image action');
+			})
+		})
 	}
 }
 
